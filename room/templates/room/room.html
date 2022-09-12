@@ -6,23 +6,42 @@
 <div class="p-10 lg:p-20 text-center">
     <h1 class="text-3xl lg:text-6xl text-white">{{ room.name }}</h1>
 </div>
-
-<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <div class="chat-messages space-y-3" id="chat-messages">
-        {% for m in messages %}<b>{{ m.user.username }}</b>: {{ m.content }}<br>{% endfor %}
-    </div>
+<div class="w-full flex flex-wrap items-center">
+        {% for m in messages %}
+        <div class="w-full lg:w-1/4 px-3 py-3 ">
+            <div class="px-4 py-6 bg-gradient-to-r from-cyan-500 to-blue-500 shadow rounded-xl text-center">
+                <h2 class="mb-5 text-2xl font-semibold">{{ m.user.username }}</h2>
+                <a href="#" class="px-5 py-3 block rounded-xl text-blue bg-teal-600 hover:bg-teal-700">{{ m.content }}</a>  
+                </div>
+                </div>
+        {% endfor %}
 </div>
+{% if room.name == 'Request'%}
 
-<div class="lg:w-2/4 mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <form method="post" action="." class="flex">
+    <form method="post" action="." class="w-full max-w-lg">    
+        
+<div class="flex flex-wrap -mx-3 mb-6l">
+    <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+        <input type="text" class="flex-1 mr-0" placeholder="Your Ether ..." id="ethval" value="1" onchange="displayethvaltext(this.value)">
+        </div>
+        <div class="flex flex-wrap w-full  px-3 mb-6 md:mb-0">
+             <input id='ethvalslider' type='range' min='0.000000001' max='10' step='.100000000' value='1' onchange="displayethval(this.value)"/>
+        </div>
+        </div>
+        <div class="flex flex-wrap px-3 -mx-3 mb-6">
+                 <input type="text" class="flex-1 mr-3 " placeholder="Your Address..." >
+        </div>
+        <div class="flex flex-wrap px-3 -mx-3 mb-6">
         <input type="text" name="content" class="flex-1 mr-3" placeholder="Your message..." id="chat-message-input">
-
+           </div>
+           <div class="lg:mx-auto rounded-xl">
         <button 
-            class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700"
+            class="px-4 py-6 rounded-xl text-white bg-teal-600 hover:bg-teal-700"
             id="chat-message-submit"
         >Submit</button>
-    </form>
-</div>
+    </div>
+    </form> 
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -96,5 +115,13 @@
 
     // Add this below the function to trigger the scroll on load.
     scrollToBottom();
+
+    function displayethval(val){
+        document.getElementById("ethval").value=val;
+    }
+    function displayethvaltext(val){
+        document.getElementById("ethvalslider").value=val;
+    }
+    
 </script>
 {% endblock %}
